@@ -52,7 +52,7 @@
 #include <Ethernet.h>
 #include <PubSubClient.h>
 
-#define VERSION     "1.20"
+#define VERSION     "1.21"
 
 #ifdef DEBUG
 #define Debug(x) Serial.print(x)
