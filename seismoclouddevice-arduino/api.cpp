@@ -12,18 +12,23 @@ PubSubClient mqttClient(ethernetClient);
 unsigned long lastNTPTime = 0;
 unsigned long lastNTPMillis = 0;
 
+/**
+ * MQTT Callback (executed when a MQTT message is received)
+ */
 void apiCallback(char* topic, byte* payload, unsigned int len) {
   if (len == 0) {
     return;
   }
 
   switch (payload[0]) {
+    // Time response
     case API_TIMERESP:
       memcpy(&lastNTPTime, payload + 1, 4);
       Debug(F("Time:"));
       Debugln(lastNTPTime);
       lastNTPMillis = millis();
       break;
+    // New configuration received
     case API_CFG:
       if (len < 7) {
         break;
@@ -63,6 +68,7 @@ void apiCallback(char* topic, byte* payload, unsigned int len) {
       Debugln(sigma);
       resetLastPeriod();
       break;
+    // Reboot request received
     case API_REBOOT:
       apiDisconnect();
       soft_restart();
