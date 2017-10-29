@@ -1,22 +1,27 @@
 #ifndef __COMMON_H
 #define __COMMON_H
 
+// ************************** PLATFORM AUTODETECTION ****************************
 #include <Arduino.h>
+// Arduino UNO
 #ifdef ARDUINO_AVR_UNO
 #define IS_ARDUINO
 #define MODEL "uno"
 #else
 
+// NodeMCU 12E
 #ifdef ESP8266
 #define IS_ESP
 #define MODEL "esp8266"
 #else
 
+// Arduino MEGA
 #ifdef ARDUINO_AVR_MEGA2560
 #define IS_ARDUINO
 #define MODEL "mega2560"
 #else
 
+// Arduino Ethernet
 #ifdef ARDUINO_AVR_ETHERNET
 #define IS_ARDUINO
 #define MODEL "uno-e"
@@ -28,24 +33,29 @@
 #endif
 #endif
 
+// ************************ BEGIN CONFIG **************************
+
+// This flag will prevent updates - USE ONLY DURING DEVELOPMENT
 // #define DONT_UPDATE
 
 // On Arduino this flag has no effect if you use avr_boot bootloader (for self-update). You should switch to standard bootloader
 // #define DEBUG
 
 #ifdef IS_ARDUINO
-// Configurazione LED per Arduino
+// LED for Arduino
 #define LED_RED     3
 #define LED_YELLOW  2
 #define LED_GREEN   5
 #else
 #ifdef IS_ESP
-// Configurazione LED per NodeMCU/ESP8266
+// LED for NodeMCU/ESP8266
 #define LED_RED     D7
 #define LED_YELLOW  D6
 #define LED_GREEN   D5
 #endif
 #endif
+
+// ************************ END CONFIG **************************
 
 #include <SPI.h>
 #include <EEPROM.h>
@@ -54,6 +64,7 @@
 
 #define VERSION     "1.21"
 
+// ******* DEBUG PART
 #ifdef DEBUG
 #define Debug(x) Serial.print(x)
 #define Debugln(x) Serial.println(x)
@@ -61,7 +72,9 @@
 #define Debug(x)
 #define Debugln(x)
 #endif
+// ******* /DEBUG PART
 
+// ******* UPDATE
 #ifndef DONT_UPDATE
 
 #ifdef IS_ARDUINO
@@ -72,6 +85,7 @@
 
 #include "update.h"
 #endif
+// ******* /UPDATE
 
 #ifdef IS_ARDUINO
 #include "AcceleroMMA7361.h"
@@ -114,14 +128,49 @@ ESP.restart()
 extern byte buffer[BUFFER_SIZE];
 extern byte ethernetMac[6];
 
+/**
+ * Format EEPROM (you'll lose all data)
+ */
 void initEEPROM();
+
+/**
+ * Check if EEPROM is faulty or not
+ */
 void checkEEPROM();
+
+/**
+ * Check MAC Address - if not present, a new one will be generated
+ */
 void checkMACAddress();
+
+/**
+ * Force a MAC Address
+ */
 void setMACAddress(byte* mac);
+
+/**
+ * Load config from EEPROM if it's valid
+ */
 void loadConfig();
+
+/**
+ * Returns the device ID (as char array)
+ */
 void getDeviceId(char* dest);
+
+/**
+ * Returns the device ID (as byte array)
+ */
 void getDeviceId(byte* dest);
+
+/**
+ * Switch to SD Card
+ */
 void selectSD();
+
+/**
+ * Switch to Ethernet card
+ */
 void selectEthernet();
 
 #ifdef DEBUG

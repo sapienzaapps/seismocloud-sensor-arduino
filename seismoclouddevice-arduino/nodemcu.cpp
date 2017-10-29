@@ -3,8 +3,8 @@
 #ifdef IS_ESP
 
 void NodeMCU::begin() {
-    Debug("Connecting to WiFi ");
-    Debugln("SeismoCloud");
+  Debug("Connecting to WiFi ");
+  Debugln("SeismoCloud");
 
   WiFiManager wifi;
   wifi.autoConnect("SeismoCloud");
