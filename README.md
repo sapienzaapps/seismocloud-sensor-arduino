@@ -1,5 +1,7 @@
 SeismoCloud project: http://www.seismocloud.com
 
+[![Build Status](https://travis-ci.org/sapienzaapps/seismoclouddevice-arduino.svg?branch=master)](https://travis-ci.org/sapienzaapps/seismoclouddevice-arduino)
+
 # Supported boards
 
 * [NodeMCU 1.0](NodeMCU.md) devkit (with ESP-12E module - ESP8266)
@@ -27,3 +29,7 @@ LEDs can be in these different states:
 * **Green + Yellow + Red - ALL blinking fast**: software is loaded, starting accelerometer
 * **Green + Yellow + Red - ALL blinking slow**: network init failed
 * **Yellow + Red - ALL blinking**: EEPROM failed
+
+# License
+
+See `LICENSE` file
