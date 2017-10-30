@@ -43,11 +43,11 @@ void addValueToAvgVar(double val) {
 }
 
 void seismometerInit() {
+  Debugln("Accelerometer initialization");
   accelero.begin();
 }
 
 void seismometerTick() {
-
   double accelVector = accelero.getTotalVector();
 
   if(accelVector > quakeThreshold) {
@@ -82,5 +82,3 @@ double getSigmaIter() {
 double getCurrentSTDDEV() {
   return sqrt(partialStdDev / (elements - 1));
 }
-
-

@@ -87,6 +87,7 @@ unsigned long getUNIXTime() {
 }
 
 void apiDisconnect() {
+  Debugln(F("API disconnection request"));
   // Will message for disconnection
   memset(buffer, 0, BUFFER_SIZE);
   byte j = 0;
@@ -105,6 +106,7 @@ void apiDisconnect() {
 }
 
 boolean apiConnect() {
+  Debugln(F("API connection request"));
   // Will message for disconnection
   memset(buffer, 0, BUFFER_SIZE);
   byte j = 0;
@@ -178,6 +180,7 @@ void apiTick() {
 }
 
 void apiAlive() {
+  Debugln(F("API ALIVE"));
   /**
      Keep alive message format:
      Position   Size      Value
@@ -238,6 +241,7 @@ void apiAlive() {
 }
 
 void apiQuake() {
+  Debugln(F("API QUAKE"));
   memset(buffer, 0, BUFFER_SIZE);
   byte j = 0;
   buffer[j] = API_QUAKE;
@@ -253,6 +257,7 @@ void apiQuake() {
 }
 
 void apiTimeReq() {
+  Debugln(F("API time request"));
   byte j = 0;
   buffer[j] = API_TIMEREQ;
   j++;
@@ -308,4 +313,3 @@ void commandInterfaceTick() {
     Debugln("Reply packet sent");
   }
 }
-

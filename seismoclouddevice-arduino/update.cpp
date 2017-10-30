@@ -24,6 +24,10 @@ MyRingBuffer buf(12);
 
 bool update(char *host, char *path) {
   bool ret = false;
+  Debug("Update requesto to");
+  Debug(host);
+  Debug(" ");
+  Debug(path);
 
   selectSD();
   switch(pf_mount(&fs)) {

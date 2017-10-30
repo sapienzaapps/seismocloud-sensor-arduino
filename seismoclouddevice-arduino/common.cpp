@@ -35,6 +35,7 @@ bool validateEEPROM() {
 }
 
 void initEEPROM() {
+  Debugln(F("EEPROM formatting"));
   LED_green(false);
   LED_red(true);
   LED_yellow(false);
@@ -48,14 +49,14 @@ void initEEPROM() {
     EEPROM.write(i, 0);
   }
 #endif
-  
+
   EEPROM.write(0, 'S');
   EEPROM.write(1, 'E');
   EEPROM.write(2, 'I');
   EEPROM.write(3, 'S');
   EEPROM.write(4, 'M');
   EEPROM.write(5, 'O');
-  
+
   LED_red(false);
 }
 
@@ -113,7 +114,7 @@ void generateMACAddress() {
 #else
   randomSeed(analogRead(A0));
 #endif
-  
+
   *(ethernetMac+0) = 0x06; // LAA
   *(ethernetMac+1) = (byte)random(0, 255);
   *(ethernetMac+2) = (byte)random(0, 255);
@@ -166,7 +167,7 @@ void selectEthernet() {
   You should have received a copy of the GNU Lesser General Public
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-  
+
   1.0  6  Jan 2010 - initial release
   1.1  12 Feb 2010 - fixed leap year calculation error
   1.2  1  Nov 2010 - fixed setTime bug (thanks to Korman for this)
@@ -192,24 +193,24 @@ void printUNIXTime() {
   uint32_t time = (uint32_t)unixTime;
   uint8_t second = time % 60;
   time /= 60;
-  
+
   uint8_t minute = time % 60;
   time /= 60;
-  
+
   uint8_t hour = time % 24;
   time /= 24;
-  
+
   uint8_t dayOfWeek = ((time + 4) % 7) + 1;
-  
-  year = 0;  
+
+  year = 0;
   days = 0;
   while((unsigned)(days += (LEAP_YEAR(year) ? 366 : 365)) <= time) {
     year++;
   }
-  
+
   days -= LEAP_YEAR(year) ? 366 : 365;
   time -= days;
-  
+
   days=0;
   month=0;
   monthLength=0;
@@ -223,14 +224,14 @@ void printUNIXTime() {
     } else {
       monthLength = monthDays[month];
     }
-    
+
     if (time >= monthLength) {
       time -= monthLength;
     } else {
         break;
     }
   }
-  uint8_t smonth = month + 1;  // jan is month 1  
+  uint8_t smonth = month + 1;  // jan is month 1
   uint8_t day = time + 1;     // day of month
 
   memset(buffer, 0, 50);
@@ -329,4 +330,3 @@ bool MyRingBuffer::endsWith(const char* str)
 
   return true;
 }
-
