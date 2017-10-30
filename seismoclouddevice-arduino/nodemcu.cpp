@@ -3,8 +3,7 @@
 #ifdef IS_ESP
 
 void NodeMCU::begin() {
-  Debug("Connecting to WiFi ");
-  Debugln("SeismoCloud");
+  Debugln("Connecting to WiFi SeismoCloud");
 
   WiFiManager wifi;
   wifi.autoConnect("SeismoCloud");
@@ -18,13 +17,13 @@ void NodeMCU::begin() {
   snprintf((char*)buffer, 16, "%d.%d.%d.%d", myIp[0], myIp[1], myIp[2], myIp[3]);
   Debugln((char*)buffer);
 #endif
-  
+
   memset(buffer, 0, 16);
   // Getting MAC Address
   WiFi.macAddress(buffer);
   setMACAddress(buffer);
-  Debug("MAC Address: ");
 #ifdef DEBUG
+  Debug("MAC Address: ");
   printMACAddress();
 #endif
 }
