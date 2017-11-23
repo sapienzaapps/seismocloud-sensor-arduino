@@ -89,6 +89,7 @@
 
 #ifdef IS_ARDUINO
 #include "AcceleroMMA7361.h"
+#include <utility/util.h>
 #include <avr/wdt.h>
 #define soft_restart()        \
 apiDisconnect();            \

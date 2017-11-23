@@ -1,5 +1,6 @@
 
 #include "api.h"
+#include "websocketclient.h"
 
 #ifdef IS_ARDUINO
 EthernetClient ethernetClient;
@@ -7,7 +8,9 @@ EthernetClient ethernetClient;
 #ifdef IS_ESP
 WiFiClient ethernetClient;
 #endif
-PubSubClient mqttClient(ethernetClient);
+
+WebSocketClient wsClient;
+PubSubClient mqttClient;
 
 unsigned long lastNTPTime = 0;
 unsigned long lastNTPMillis = 0;
@@ -121,6 +124,9 @@ boolean apiConnect() {
 
   // END Will message
 
+  // mqttClient.setClient(ethernetClient);
+  wsClient.setClient(&ethernetClient);
+  mqttClient.setClient(wsClient);
   mqttClient.setServer("mqtt.seismocloud.com", 1883);
   mqttClient.setCallback(apiCallback);
   mqttClient.connect((char*)(buffer + 2), "embedded", "embedded", "server", 0, 0, (char*)buffer);
