@@ -60,7 +60,7 @@ void setup() {
 #ifdef IS_ESP
   NodeMCU::begin();
 #endif
-  if (!apiConnect()) {
+  if (!apiConnect(false)) {
     soft_restart();
   }
 

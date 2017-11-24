@@ -108,7 +108,7 @@ void apiDisconnect() {
   mqttClient.disconnect();
 }
 
-boolean apiConnect() {
+boolean apiConnect(boolean useWebSocket) {
   Debugln(F("API connection request"));
   // Will message for disconnection
   memset(buffer, 0, BUFFER_SIZE);
@@ -124,9 +124,12 @@ boolean apiConnect() {
 
   // END Will message
 
-  // mqttClient.setClient(ethernetClient);
-  wsClient.setClient(&ethernetClient);
-  mqttClient.setClient(wsClient);
+  if (!useWebSocket) {
+    mqttClient.setClient(ethernetClient);
+  } else {
+    wsClient.setClient(&ethernetClient);
+    mqttClient.setClient(wsClient);
+  }
   mqttClient.setServer("mqtt.seismocloud.com", 1883);
   mqttClient.setCallback(apiCallback);
   mqttClient.connect((char*)(buffer + 2), "embedded", "embedded", "server", 0, 0, (char*)buffer);
@@ -174,14 +177,15 @@ boolean apiConnect() {
     mqttClient.subscribe((char*)buffer, 1);
     return true;
   } else {
-    return false;
+    mqttClient.disconnect();
+    return useWebSocket ? false : apiConnect(true);
   }
 }
 
 void apiTick() {
   if (!mqttClient.loop()) {
     delay(3000);
-    apiConnect();
+    apiConnect(false);
   }
 }
 
