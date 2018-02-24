@@ -1,3 +1,15 @@
+# OLD REPOSITORY
+
+Due to Arduino Uno support has been dropped in SeismoCloud network, this repository will not be updated anymore. **Please switch to NodeMCU**, here you can find the right repository:
+
+https://github.com/sapienzaapps/seismoclouddevice-nodemcu
+
+**DO NOT USE THIS REPOSITORY ANYMORE**
+
+--------------------------
+
+# - OLD README -
+
 SeismoCloud project: http://www.seismocloud.com
 
 [![Build Status](https://travis-ci.org/sapienzaapps/seismoclouddevice-arduino.svg?branch=master)](https://travis-ci.org/sapienzaapps/seismoclouddevice-arduino)

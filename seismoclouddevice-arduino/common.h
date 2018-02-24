@@ -1,6 +1,8 @@
 #ifndef __COMMON_H
 #define __COMMON_H
 
+#error "This code il OLD, please read the file README.md"
+
 #include <Arduino.h>
 #ifdef ARDUINO_AVR_UNO
 #define IS_ARDUINO
